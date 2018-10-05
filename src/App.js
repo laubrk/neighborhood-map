@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
 import Map from './components/Map.js';
+import Sidebar from './components/Sidebar.js'
 import axios from 'axios'
 
 let locations, endpoint, params;
 
 class App extends Component {
 
+  state = {
+    locationNames: [],
+    fourSquareReady: false //new
+  }
+  
   componentDidMount() {
     this.foursquareLocations()
   }
@@ -18,26 +24,33 @@ class App extends Component {
       client_secret: "SBCF5FNWEE1XHCHOQINY0T2U3UAUYYQSFOMD0GZ5VAGTDRBX",
       query: "brewery",
       ll: "32.713631,-117.155602",
-      limit: 10,
+      limit: 12,
       v: '20180323',
     }
 
     axios.get(endpoint + new URLSearchParams(params))
       .then(response => {
-        let locationNames = 
-        response.data.response.groups
-        console.log(locationNames)
+        this.setState({
+          locationNames: response.data.response.groups[0].items,
+          fourSquareReady: true,
+        })
+          console.log(this.state.fourSquareReady)
     }).catch(error => {
-        console.log("Error"+error)
+        alert(`There was an error with Foursquare`)
     })
   }
-  
+
   render() {
+    if (this.state.fourSquareReady) {
     return (
       <div>
-        <Map/>
+      <Sidebar/>
+        <Map
+          locationNames={this.state.locationNames}
+          fourSquareReady = {this.state.fourSquareReady}
+        />
       </div>
-    );
+    );} else {return "help"}
   }
 }
 
