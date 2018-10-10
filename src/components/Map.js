@@ -20,11 +20,12 @@ initMap = () => {
     var marker = new window.google.maps.Marker({
       position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
       map: map,
-      id: 888,
-      title: location.venue.name,
       id: location.venue.id,
+      title: location.venue.name,
       address: location.venue.location.address,
-      animation: window.google.maps.Animation.DROP
+      animation: window.google.maps.Animation.DROP,
+      isOpen: false,
+      isVisible: true
     })
         
     var infowindow = new window.google.maps.InfoWindow({
@@ -47,10 +48,9 @@ initMap = () => {
 }
   
   render() {
-    console.log(this.props.locationNames)
+    //console.log(this.props.locationNames)
     return (
-      <div>
-        <div id="map" ref="map"></div>
+      <div id="map" ref="map">
       </div>
     );
   }

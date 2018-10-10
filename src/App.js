@@ -4,13 +4,14 @@ import Map from './components/Map.js';
 import Sidebar from './components/Sidebar.js'
 import axios from 'axios'
 
-let locations, endpoint, params;
+let locations, endpoint, params, ApiVenues;
 
 class App extends Component {
 
   state = {
     locationNames: [],
-    fourSquareReady: false //new
+    fourSquareReady: false,
+    markers: []
   }
   
   componentDidMount() {
@@ -27,7 +28,8 @@ class App extends Component {
       limit: 12,
       v: '20180323',
     }
-
+    
+    const ApiVenues = 
     axios.get(endpoint + new URLSearchParams(params))
       .then(response => {
         this.setState({
@@ -43,14 +45,17 @@ class App extends Component {
   render() {
     if (this.state.fourSquareReady) {
     return (
-      <div>
-      <Sidebar/>
+      <div className="App">
+      <div id="navbar">
+        <div id="navbar-text">Neighborhood Breweries</div>
+      </div>
+      <Sidebar {...this.state}/>
         <Map
           locationNames={this.state.locationNames}
           fourSquareReady = {this.state.fourSquareReady}
         />
       </div>
-    );} else {return "help"}
+    );} else {return "Fetching Data"}
   }
 }
 
