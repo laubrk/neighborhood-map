@@ -8,11 +8,13 @@ let locations, endpoint, params, ApiVenues;
 
 class App extends Component {
 
-  state = {
+  constructor(props) {
+  super(props)
+    this.state = {
     locationNames: [],
     fourSquareReady: false,
     markers: []
-  }
+  }}
   
   componentDidMount() {
     this.foursquareLocations()
@@ -36,7 +38,7 @@ class App extends Component {
           locationNames: response.data.response.groups[0].items,
           fourSquareReady: true,
         })
-          console.log(this.state.fourSquareReady)
+          console.log("FourSquareReady"+this.state.fourSquareReady)
     }).catch(error => {
         alert(`There was an error with Foursquare`)
     })
@@ -60,76 +62,3 @@ class App extends Component {
 }
 
 export default App;
-
-//reference: https://www.codementor.io/thomastuts/integrate-google-maps-api-react-refs-du10842zd
-//reference: https://reactjs.org/docs/refs-and-the-dom.html#callback-refs
-
-
-
-/*
-Alternate reference for loading map -------------------------
-
-class App extends Component {
-  
-  componentDidMount() {
-    this.displayMap()
-  }
-  
-  displayMap = () => {
-    loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyC11yTTz1zLj-wJ-q5BYRFdNLSsIWtprvU&v=3&callback=initMap")
-    window.initMap = this.initMap
-  }
-  
-  initMap = () => {
-   const map = new window.google.maps.Map(document.getElementById("map"), {
-     center: {lat: 40.712776, lng: -74.005974},
-     zoom: 13
-   });
-  }
-  
-  render() {
-    return (
-      <main>
-        <div id="map"></div>
-      </main>
-    );
-  }
-}
-
-function loadScript(string) {
-  var index  = window.document.getElementsByTagName("script")[0]
-  var script = window.document.createElement("script")
-  script.src = string
-  script.async = true
-  script.defer = true
-  index.parentNode.insertBefore(script, index)
-}
-
-export default App;
-*/
-
-/*
-class App extends Component {
-  
-  componentDidMount() {
-    this.initMap()
-  }
-  
- initMap = () => {
-    map = new window.google.maps.Map(this.mapArea, {
-     center: {lat: 40.712776, lng: -74.005974},
-     zoom: 13
-   });
-  }
-  
-  render() {
-    return (
-      <div
-      id="map"
-        ref={div => {this.mapArea = div}}>
-      </div>
-    );
-  }
-}
-
-*/
