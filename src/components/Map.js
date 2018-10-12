@@ -1,9 +1,10 @@
+/*
 import React, { Component } from 'react';
 
 let map;
 
 class Map extends Component {
-
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -47,22 +48,20 @@ initMap = () => {
       infowindow.open(map, marker);
     });
     
-    /* Optional work
-    marker.addListener('click', function() {
-      marker.setAnimation(window.google.maps.Animation.BOUNCE);
-    });
-    */
-    
   });
+
+  this.props.updateMarkers();
 }
-  
+
   render() {
-    //console.log(this.state.markers)
+    console.log(this.props.updateMarkers)
     return (
-      <div id="map" ref="map">
+      <div id="map" ref="map">     
       </div>
+
     );
   }
 }
 
 export default Map;
+*/

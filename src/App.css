@@ -77,16 +77,18 @@ html, body {
   cursor: pointer;
   color: black;
   border-radius: 3px 3px 3px 3px;
-  border: 1px solid #000000;
+  border: 1px solid #4285F4;
   font-size: 16px;
-  background-color: #e8e2e2    
+  background-color: #fafafa;
 }
 
 .venue-name:hover {
-      background-color: white
+  background-color: #4285F4;
+  color: white
 }
 
 #venue-address {
+  padding-top: 3px;
   font-size: 12px;
   font-style: italic
 }

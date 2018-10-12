@@ -11,14 +11,23 @@ class Sidebar extends Component {
   
   updateQuery = (query) => {
     this.setState({query: query});
-    //this.getBooksSearched(query)
   }
   
   openWindow = (id) => {
-    console.log(this.props.markers)
+    //console.log(this.props.markers)
     this.props.markers.map(marker => {
       if (marker.id === id) {
         window.google.maps.event.trigger(marker,"click")
+      }
+    })
+  }
+  
+  //https://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
+  bounceMarker = (id) => {
+    this.props.markers.map(marker => {
+      if (marker.id === id) {
+        marker.setAnimation(window.google.maps.Animation.BOUNCE);
+        setTimeout(function(){marker.setAnimation(null);},3000);
       }
     })
   }
@@ -39,11 +48,10 @@ class Sidebar extends Component {
           <ol className="venue-list">
             {this.props.locationNames.map(location => (
               <li className="venue-name" key={location.venue.id}
-
                 onClick={() => {
-                 this.openWindow(location.venue.id);     
+                  this.openWindow(location.venue.id);
+                  this.bounceMarker(location.venue.id)
                 }}
-                
               >
                 {location.venue.name}
               <div id="venue-address">
