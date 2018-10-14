@@ -14,13 +14,20 @@ class Sidebar extends Component {
   }
   
   openWindow = (id) => {
-    //console.log(this.props.markers)
     this.props.markers.map(marker => {
       if (marker.id === id) {
         window.google.maps.event.trigger(marker,"click")
-      }
+      } else {marker.infoWindow.close(this.map,marker)}
     })
   }
+  
+  closeWindows = (id) => {
+    this.props.markers.map(marker => {
+    if (marker.id !== id) {
+        //this.props.infoWindow.close(this.props.map, marker)
+      }
+  })
+}
   
   //https://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
   bounceMarker = (id) => {
@@ -50,12 +57,18 @@ class Sidebar extends Component {
               <li className="venue-name" key={location.venue.id}
                 onClick={() => {
                   this.openWindow(location.venue.id);
-                  this.bounceMarker(location.venue.id)
+                  this.bounceMarker(location.venue.id);
+                  this.closeWindows(location.venue.id)
                 }}
               >
                 {location.venue.name}
               <div id="venue-address">
-                {location.venue.location.address}, San Diego, CA
+                <p>
+                  {location.venue.location.formattedAddress[0]}
+                </p>
+                <p>
+                  {location.venue.location.formattedAddress[1]}
+                </p>
               </div>
               </li>
               ))

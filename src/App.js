@@ -80,13 +80,16 @@ class App extends Component {
     super(props)
     this.state = {
       locationNames: [],
+      locationPhotos:[],
       fourSquareReady: false,
-      markers: []
+      markers: [],
+      infoWindows:[]
     }
   }
   
   componentDidMount() {
-    this.foursquareLocations()
+    this.foursquareLocations(),
+    this.foursquarePhotos()
   }
   
   componentDidUpdate(prevProps,prevState){
@@ -103,7 +106,7 @@ class App extends Component {
       query: "brewery",
       ll: "32.713631,-117.155602",
       limit: 12,
-      v: '20180323',
+      v: '20181011',
     }
     
     axios.get(endpoint + new URLSearchParams(params))
@@ -112,13 +115,33 @@ class App extends Component {
           locationNames: response.data.response.groups[0].items,
           fourSquareReady: true,
         })
-          console.log("FourSquareReady"+this.state.fourSquareReady)
+          console.log("FourSquare Done: "+this.state.fourSquareReady)
     })
       .catch(error => {
-        alert(`There was an error with Foursquare`)
+        alert(`There was an error with Foursquare Venue Data`)
+        console.log("FourSquare Venue Error " + error)
     })
   }
 
+foursquarePhotos = () => {
+    const endpoint = "https://api.foursquare.com/v2/venues/4c422b9caf052d7f9b8e7e79/photos?"
+    const params = {
+      client_id: "4GEVXOTWI0JXY51A0DS1K5CA3TCC5YWKEOTRMEYEGE2JO1CJ",
+      client_secret: "SBCF5FNWEE1XHCHOQINY0T2U3UAUYYQSFOMD0GZ5VAGTDRBX",
+      v: '20181011',
+    }
+    
+    axios.get(endpoint + new URLSearchParams(params))
+      .then(response => {
+        this.setState({
+          locationPhoto: response.data,
+        })
+    })
+      .catch(error => {
+        alert("There was an error with Foursquare Photo Data")
+        console.log("FourSquare Photo Error " + error)
+    })
+  }
   
 initMap = () => {
   const map = new window.google.maps.Map(this.refs.map, {
@@ -126,7 +149,7 @@ initMap = () => {
     zoom: 15
   });
 
-  console.log("map "+this.state.fourSquareReady)
+  //console.log("Map Loading: "+this.state.fourSquareReady)
   
   this.state.locationNames.map(location => {
     const marker = new window.google.maps.Marker({
@@ -135,6 +158,7 @@ initMap = () => {
       id: location.venue.id,
       title: location.venue.name,
       address: location.venue.location.address,
+      formattedAddress: location.venue.location.formattedAddress,
       animation: window.google.maps.Animation.DROP,
       isOpen: false,
       isVisible: true
@@ -142,21 +166,25 @@ initMap = () => {
     
     this.state.markers.push(marker)
     
-    const infowindow = new window.google.maps.InfoWindow({
+    marker.infoWindow = new window.google.maps.InfoWindow({
       content:
-        `<p>${marker.title}</p>
-        <p>${marker.address}</p>`
+        `<div id="infoWindow">`+
+        `<h1>${marker.title}</h1>`+
+        `<p>${marker.formattedAddress[0]}</p>`+
+        `<p>${marker.formattedAddress[1]}</p>`+
+        `</div>`,
+      maxWidth: 300
     });
       
     marker.addListener('click', function() {
-      infowindow.open(map, marker);
+      marker.infoWindow.open(map, marker);
     });
     
   });
 }
 
   render() {
-    
+    console.log({...this.state})
     return (
       <div className="App">
       <div id="navbar">
@@ -168,4 +196,5 @@ initMap = () => {
     )
   }
 }
+
 export default App;
