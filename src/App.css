@@ -103,8 +103,17 @@ html, body {
 }
 
 #venue-address {
-  line-height: 2px;
-  padding-top: 0px;
-  font-size: 14px;
-  font-style: italic
+  padding-bottom: 0px;
+  font-size: 16px;
+  font-style: italic;
+}
+
+#venue-address p:first-child {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+#venue-address p:nth-child(2) {
+  margin-top: 2px;
+  margin-bottom: 2px;
 }

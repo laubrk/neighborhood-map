@@ -88,8 +88,8 @@ class App extends Component {
   }
   
   componentDidMount() {
-    this.foursquareLocations(),
-    this.foursquarePhotos()
+    this.foursquareLocations()
+    //this.foursquarePhotos()
   }
   
   componentDidUpdate(prevProps,prevState){
@@ -123,7 +123,7 @@ class App extends Component {
     })
   }
 
-foursquarePhotos = () => {
+  foursquarePhotos = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/4c422b9caf052d7f9b8e7e79/photos?"
     const params = {
       client_id: "4GEVXOTWI0JXY51A0DS1K5CA3TCC5YWKEOTRMEYEGE2JO1CJ",
@@ -139,15 +139,15 @@ foursquarePhotos = () => {
     })
       .catch(error => {
         alert("There was an error with Foursquare Photo Data")
-        console.log("FourSquare Photo Error " + error)
+        //console.log("FourSquare Photo Error " + error)
     })
   }
   
-initMap = () => {
-  const map = new window.google.maps.Map(this.refs.map, {
-    center: {lat: 32.713631, lng: -117.155602},
-    zoom: 15
-  });
+  initMap = () => {
+    const map = new window.google.maps.Map(this.refs.map, {
+      center: {lat: 32.713631, lng: -117.155602},
+      zoom: 15
+    });
 
   //console.log("Map Loading: "+this.state.fourSquareReady)
   
