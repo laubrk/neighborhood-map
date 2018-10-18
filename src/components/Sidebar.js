@@ -27,11 +27,14 @@ class Sidebar extends Component {
   showMarkers = (query) => {
     let filteredMarkers = 
       this.props.markers.filter(place =>
+      !place.title.toLowerCase().includes(query)
+      )
+      .map(place => (place.setVisible(false)));
+    let unfilteredMarkers = 
+      this.props.markers.filter(place =>
       place.title.toLowerCase().includes(query)
       )
-      //this.setState({filteredMarkers: filteredMarkers})
-      this.props.markers[11].setVisible(false);
-      this.setState({filteredMarkers: filteredMarkers})
+      .map(place => (place.setVisible(true)));
   }
 
   openWindow = (id) => {
