@@ -57,8 +57,8 @@ class Sidebar extends Component {
   
   render() {
     return (
-      <div className="sidebar">
-        <div className="sidebar-content">
+      <div className="sidebar" tabIndex="-1" >
+        <div className="sidebar-content" tabIndex="-1">
           <input
             type={"search"}
             id={"search"}
@@ -68,10 +68,10 @@ class Sidebar extends Component {
             value={this.state.value}
             onChange={(event) => this.updateQuery(event.target.value)}
           />
-          <ol className="venue-list">
+          <ol className="venue-list" role="list">
             {this.state.query &&
              this.state.filteredSearch.map(location => (
-              <li className="venue-name" key={location.venue.id}
+              <li className="venue-name" tabIndex="0" role="listitem" key={location.venue.id}
                 onClick={() => {
                   this.openWindow(location.venue.id);
                   this.bounceMarker(location.venue.id)
@@ -93,7 +93,7 @@ class Sidebar extends Component {
             
             {!this.state.query && 
               this.props.locationNames.map(location => (
-              <li className="venue-name" key={location.venue.id}
+              <li className="venue-name" tabIndex="0" role="listitem" key={location.venue.id}
                 onClick={() => {
                   this.openWindow(location.venue.id);
                   this.bounceMarker(location.venue.id)

@@ -68,7 +68,7 @@ class App extends Component {
 export default App;
 */
 
-import React, { Component } from 'react';
+import React, {Fragment, Component } from 'react';
 import './App.css';
 //import Map from './components/Map.js';
 import Sidebar from './components/Sidebar.js'
@@ -104,7 +104,8 @@ class App extends Component {
       client_id: "4GEVXOTWI0JXY51A0DS1K5CA3TCC5YWKEOTRMEYEGE2JO1CJ",
       client_secret: "SBCF5FNWEE1XHCHOQINY0T2U3UAUYYQSFOMD0GZ5VAGTDRBX",
       query: "brewery",
-      ll: "32.713631,-117.155602",
+      //ll: "32.713631,-117.155602",
+      near: 'san diego, CA',
       limit: 12,
       v: '20181011',
     }
@@ -162,7 +163,7 @@ class App extends Component {
       animation: window.google.maps.Animation.DROP,
       isOpen: false,
       isVisible: true
-    })
+    });
     
     this.state.markers.push(marker)
     
@@ -175,10 +176,21 @@ class App extends Component {
         `</div>`,
       maxWidth: 300
     });
-      
+    
+    //show infowindow on click
     marker.addListener('click', function() {
+      closeMarkers(map);
       marker.infoWindow.open(map, marker);
     });
+    
+    //close all infowindows on click of new marker
+    //https://hashnode.com/post/google-maps-api-onclick-on-marker-close-infowindow-of-other-markers-ciou68dw708x33353les71nyi
+    let closeMarkers = (map) => 
+      {console.log('test')
+      this.state.markers.forEach(function(marker) {
+        marker.infoWindow.close(map,marker);
+      });
+      }
     
   });
 }
@@ -186,15 +198,38 @@ class App extends Component {
   render() {
     console.log({...this.state})
     return (
+      <Fragment>
+        <div className="App">
+          <header id="navbar">
+            <div id="navbar-text">Neighborhood Breweries</div>
+          </header>
+        <main>
+          <Sidebar {...this.state}/>
+          <div id="map" ref="map" aria-label="map" role="application"></div>
+        </main>
+        <footer>Powered by Foursquare &nbsp; &nbsp;<i className = "fa fa-foursquare"></i></footer>
+        </div>
+      </Fragment>
+    )
+  }
+  
+/*
+  render() {
+    console.log({...this.state})
+    return (
       <div className="App">
-      <div id="navbar">
-        <div id="navbar-text">Neighborhood Breweries</div>
-      </div>
+        <div id="navbar">
+          <div id="navbar-text">Neighborhood Breweries</div>
+        </div>
       <Sidebar {...this.state}/>
-        <div id="map" ref="map"></div>
+        <div id="map" ref="map" aria-label="map" role="application"></div>
+      <footer>Powered by Foursquare</footer>
       </div>
     )
   }
+*/
+
 }
+
 
 export default App;
