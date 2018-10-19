@@ -70,7 +70,6 @@ export default App;
 
 import React, {Fragment, Component } from 'react';
 import './App.css';
-//import Map from './components/Map.js';
 import Sidebar from './components/Sidebar.js'
 import axios from 'axios'
 
@@ -92,7 +91,7 @@ class App extends Component {
     //this.foursquarePhotos()
   }
   
-  componentDidUpdate(prevProps,prevState){
+  componentDidUpdate(prevProps,prevState) {
     if (prevProps.fourSquareReady !==this.state.fourSquareReady){
       this.initMap()
     }
@@ -116,7 +115,7 @@ class App extends Component {
           locationNames: response.data.response.groups[0].items,
           fourSquareReady: true,
         })
-          console.log("FourSquare Done: "+this.state.fourSquareReady)
+          //console.log("FourSquare Done: "+this.state.fourSquareReady)
     })
       .catch(error => {
         alert(`There was an error with Foursquare Venue Data`)
@@ -137,11 +136,10 @@ class App extends Component {
         this.setState({
           locationPhoto: response.data,
         })
-    })
+      })
       .catch(error => {
-        alert("There was an error with Foursquare Photo Data")
-        //console.log("FourSquare Photo Error " + error)
-    })
+        alert("There was an error with Foursquare photo data. Error: " + error)
+      })
   }
   
   initMap = () => {
@@ -150,53 +148,53 @@ class App extends Component {
       zoom: 15
     });
 
-  //console.log("Map Loading: "+this.state.fourSquareReady)
-  
-  this.state.locationNames.map(location => {
-    const marker = new window.google.maps.Marker({
-      position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
-      map: map,
-      id: location.venue.id,
-      title: location.venue.name,
-      address: location.venue.location.address,
-      formattedAddress: location.venue.location.formattedAddress,
-      animation: window.google.maps.Animation.DROP,
-      isOpen: false,
-      isVisible: true
-    });
-    
-    this.state.markers.push(marker)
-    
-    marker.infoWindow = new window.google.maps.InfoWindow({
-      content:
-        `<div id="infoWindow">`+
-        `<h1>${marker.title}</h1>`+
-        `<p>${marker.formattedAddress[0]}</p>`+
-        `<p>${marker.formattedAddress[1]}</p>`+
-        `</div>`,
-      maxWidth: 300
-    });
-    
-    //show infowindow on click
-    marker.addListener('click', function() {
-      closeMarkers(map);
-      marker.infoWindow.open(map, marker);
-    });
-    
-    //close all infowindows on click of new marker
-    //https://hashnode.com/post/google-maps-api-onclick-on-marker-close-infowindow-of-other-markers-ciou68dw708x33353les71nyi
-    let closeMarkers = (map) => 
-      {console.log('test')
-      this.state.markers.forEach(function(marker) {
-        marker.infoWindow.close(map,marker);
+    //console log testing for asynch loading issues
+    //console.log("Map Loading: "+this.state.fourSquareReady)
+
+    this.state.locationNames.map(location => {
+      const marker = new window.google.maps.Marker({
+        position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
+        map: map,
+        id: location.venue.id,
+        title: location.venue.name,
+        address: location.venue.location.address,
+        formattedAddress: location.venue.location.formattedAddress,
+        animation: window.google.maps.Animation.DROP,
+        isOpen: false,
+        isVisible: true
       });
+
+      this.state.markers.push(marker)
+
+      marker.infoWindow = new window.google.maps.InfoWindow({
+        content:
+          `<div id="infoWindow">`+
+          `<h1>${marker.title}</h1>`+
+          `<p>${marker.formattedAddress[0]}</p>`+
+          `<p>${marker.formattedAddress[1]}</p>`+
+          `</div>`,
+        maxWidth: 300
+      });
+
+      //show infowindow on click
+      marker.addListener('click', function() {
+        closeMarkers(map);
+        marker.infoWindow.open(map, marker);
+      });
+
+      //close all infowindows on click of new marker
+      //https://hashnode.com/post/google-maps-api-onclick-on-marker-close-infowindow-of-other-markers-ciou68dw708x33353les71nyi
+      let closeMarkers = (map) => {
+        this.state.markers.forEach(function(marker) {
+          marker.infoWindow.close(map,marker);
+        });
       }
-    
-  });
-}
+
+    });
+  }
 
   render() {
-    console.log({...this.state})
+    //console.log({...this.state})
     return (
       <Fragment>
         <div className="App">
@@ -212,22 +210,6 @@ class App extends Component {
       </Fragment>
     )
   }
-  
-/*
-  render() {
-    console.log({...this.state})
-    return (
-      <div className="App">
-        <div id="navbar">
-          <div id="navbar-text">Neighborhood Breweries</div>
-        </div>
-      <Sidebar {...this.state}/>
-        <div id="map" ref="map" aria-label="map" role="application"></div>
-      <footer>Powered by Foursquare</footer>
-      </div>
-    )
-  }
-*/
 
 }
 

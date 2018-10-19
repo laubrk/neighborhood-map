@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import Map from './Map.js';
 
 class Sidebar extends Component {
   
   constructor(props) {
-  super(props)
-  this.state = {
-    query: "",
-    filteredSearch:[],
-    filteredMarkers:[]
-  }}
+    super(props)
+    this.state = {
+      query: "",
+      filteredSearch:[],
+      filteredMarkers:[]
+    }
+  }
   
   updateQuery = (query) => {
     this.setState({query: query});
@@ -17,6 +17,8 @@ class Sidebar extends Component {
     this.showMarkers(query)
   }
 
+  
+  //Run search query form search box input. Filter and show locations based on query
   searchLocations = (query) => {
     let filteredSearch =
       this.props.locationNames.filter(place => place.venue.name.toLowerCase().includes(query)
@@ -24,19 +26,23 @@ class Sidebar extends Component {
       this.setState({filteredSearch: filteredSearch})
   }
   
+  //Show markers for when match on search query by setting marker visibility true
+  //and false if not a match from query.
   showMarkers = (query) => {
-    let filteredMarkers = 
+    //filtered markers (filtered to mean exclude from list) 
       this.props.markers.filter(place =>
       !place.title.toLowerCase().includes(query)
       )
       .map(place => (place.setVisible(false)));
-    let unfilteredMarkers = 
+    //unfiltered markers (to mean include in list)
       this.props.markers.filter(place =>
       place.title.toLowerCase().includes(query)
       )
       .map(place => (place.setVisible(true)));
   }
 
+  //Open infowindow if id from click on marker matches in array of markers
+  //and close all others if not match to id for the rest in array
   openWindow = (id) => {
     this.props.markers.map(marker => {
       if (marker.id === id) {
@@ -45,6 +51,7 @@ class Sidebar extends Component {
     })
   }
   
+  //perform marker bounce with timeout if clicked
   //https://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
   bounceMarker = (id) => {
     this.props.markers.map(marker => {
@@ -68,46 +75,44 @@ class Sidebar extends Component {
             value={this.state.value}
             onChange={(event) => this.updateQuery(event.target.value)}
           />
-          <ol className="venue-list" role="list">
+          <ol className="venue-list">
             {this.state.query &&
              this.state.filteredSearch.map(location => (
-              <li className="venue-name" tabIndex="0" role="listitem" key={location.venue.id}
+              <li className="venue-name" tabIndex="0" key={location.venue.id}
                 onClick={() => {
                   this.openWindow(location.venue.id);
                   this.bounceMarker(location.venue.id)
                 }}
               >
                 {location.venue.name}
-              <div id="venue-address">
-                <p>
-                  {location.venue.location.formattedAddress[0]}
-                </p>
-                <p>
-                  {location.venue.location.formattedAddress[1]}
-                </p>
-              </div>
+                <div id="venue-address">
+                  <p>
+                    {location.venue.location.formattedAddress[0]}
+                  </p>
+                  <p>
+                    {location.venue.location.formattedAddress[1]}
+                  </p>
+                </div>
               </li>
               ))
-
             }
-            
             {!this.state.query && 
               this.props.locationNames.map(location => (
-              <li className="venue-name" tabIndex="0" role="listitem" key={location.venue.id}
+              <li className="venue-name" tabIndex="0" key={location.venue.id}
                 onClick={() => {
                   this.openWindow(location.venue.id);
                   this.bounceMarker(location.venue.id)
                 }}
               >
                 {location.venue.name}
-              <div id="venue-address">
-                <p>
-                  {location.venue.location.formattedAddress[0]}
-                </p>
-                <p>
-                  {location.venue.location.formattedAddress[1]}
-                </p>
-              </div>
+                <div id="venue-address">
+                  <p>
+                    {location.venue.location.formattedAddress[0]}
+                  </p>
+                  <p>
+                    {location.venue.location.formattedAddress[1]}
+                  </p>
+                </div>
               </li>
               ))
             }
@@ -119,5 +124,3 @@ class Sidebar extends Component {
 }
 
 export default Sidebar;
-
-//{this.props.locationNames.map(location => (
