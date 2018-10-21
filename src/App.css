@@ -48,7 +48,7 @@ footer {
 
 /* Styles for page heading area */
 
-#navbar {
+.navbar {
   position: relative;
   z-index: 100;
   box-shadow: 0px, 1px, 1px, grey;
@@ -63,7 +63,16 @@ footer {
   line-height: 60px;
   padding-left: 20px;
   font-size: 26px;
-  font-weight: 600
+  font-weight: 600;
+  text-align: left
+}
+
+.navbar i {
+  color: white;
+  position: absolute;
+  align-content: right;
+  right: 20px;
+  top: 15px
 }
 
 /* Styles for sidebar, search box, and list items */
@@ -77,7 +86,8 @@ footer {
   max-width: 100%;
   /* display: block; */
   height: calc(100vh - 60px);
-  overflow-y: scroll
+  overflow-y: scroll;
+  transition: 0.5s
 }
 
 .sidebar-content {

@@ -82,13 +82,14 @@ class App extends Component {
       locationPhotos:[],
       fourSquareReady: false,
       markers: [],
-      infoWindows:[]
+      infoWindows:[],
+      menuOpen: true
     }
   }
   
   componentDidMount() {
     this.foursquareLocations()
-    //this.foursquarePhotos()
+    //this.foursquarePhotos() //coded out for later work
   }
   
   componentDidUpdate(prevProps,prevState) {
@@ -103,8 +104,8 @@ class App extends Component {
       client_id: "4GEVXOTWI0JXY51A0DS1K5CA3TCC5YWKEOTRMEYEGE2JO1CJ",
       client_secret: "SBCF5FNWEE1XHCHOQINY0T2U3UAUYYQSFOMD0GZ5VAGTDRBX",
       query: "brewery",
-      //ll: "32.713631,-117.155602",
-      near: 'san diego, CA',
+      ll: "32.713631,-117.155602",
+      //near: 'san diego, CA',
       limit: 12,
       v: '20181011',
     }
@@ -123,6 +124,8 @@ class App extends Component {
     })
   }
 
+  //this is work in progress to add photos to infowindow
+  //not called so non-funtional and not part of project reqs
   foursquarePhotos = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/4c422b9caf052d7f9b8e7e79/photos?"
     const params = {
@@ -141,6 +144,13 @@ class App extends Component {
         alert("There was an error with Foursquare photo data. Error: " + error)
       })
   }
+  
+  /* moved to sidebar.js
+  menuToggle = () => {
+    this.setState({menuOpen: !this.state.menuOpen})
+    console.log("state: "+this.state.menuOpen);
+  }
+  */
   
   initMap = () => {
     const map = new window.google.maps.Map(this.refs.map, {
@@ -197,13 +207,25 @@ class App extends Component {
     //console.log({...this.state})
     return (
       <Fragment>
-        <div className="App">
-          <header id="navbar">
-            <div id="navbar-text">Neighborhood Breweries</div>
+        <div className = "App">
+          
+      {/* moved to sidebar.js
+          <header className ="navbar">
+            <div id = "navbar-text">Neighborhood Breweries
+              <i
+                className = "fa fa-bars"
+                aria-label="menu"
+                role="menu"
+                onClick={this.menuToggle}
+              >
+            </i>
+            </div>
           </header>
+      */}
+
         <main>
           <Sidebar {...this.state}/>
-          <div id="map" ref="map" aria-label="map" role="application"></div>
+          <div id = "map" ref = "map" aria-label = "map" role="application"></div>
         </main>
         <footer>Powered by Foursquare &nbsp; &nbsp;<i className = "fa fa-foursquare"></i></footer>
         </div>
@@ -212,6 +234,5 @@ class App extends Component {
   }
 
 }
-
 
 export default App;

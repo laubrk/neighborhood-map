@@ -7,7 +7,9 @@ class Sidebar extends Component {
     this.state = {
       query: "",
       filteredSearch:[],
-      filteredMarkers:[]
+      filteredMarkers:[],
+      isSideBarOpen: true,
+      menuOpen: true //new
     }
   }
   
@@ -62,9 +64,30 @@ class Sidebar extends Component {
     })
   }
   
+  menuToggle = () => {
+    this.setState({menuOpen: !this.state.menuOpen})
+    console.log("state: "+this.state.menuOpen);
+  }
+  
   render() {
+    
+    let navBarStyle = {visibility:this.state.menuOpen ? "visible" : "hidden"}
     return (
-      <div className="sidebar" tabIndex="-1" >
+      <div> {/* new div with navbar added navbar below added from app.js*/}
+          <header className ="navbar">
+            <div id = "navbar-text">Neighborhood Breweries
+              <i
+                className = "fa fa-bars"
+                aria-label="menu"
+                role="menu"
+                onClick={this.menuToggle}
+              >
+            </i>
+            </div>
+          </header>
+      
+      <div className="sidebar" tabIndex="-1" style = {navBarStyle}> {/*see below comment for what this replaced*/}
+      
         <div className="sidebar-content" tabIndex="-1">
           <input
             type={"search"}
@@ -119,8 +142,13 @@ class Sidebar extends Component {
           </ol>
         </div>
       </div>
+</div>
     );
   }
 }
 
 export default Sidebar;
+
+      /*
+      <div className="sidebar" tabIndex="-1" style={{visibility:this.props.menuOpen ? "visible" : "hidden"}}>
+      */
