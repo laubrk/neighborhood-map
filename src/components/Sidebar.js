@@ -149,7 +149,3 @@ class Sidebar extends Component {
 }
 
 export default Sidebar;
-
-      /*
-      <div className="sidebar" tabIndex="-1" style={{visibility:this.props.menuOpen ? "visible" : "hidden"}}>
-      */
