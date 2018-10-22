@@ -9,7 +9,7 @@ class Sidebar extends Component {
       filteredSearch:[],
       filteredMarkers:[],
       isSideBarOpen: true,
-      menuOpen: true //new
+      menuOpen: true
     }
   }
   
@@ -72,7 +72,7 @@ class Sidebar extends Component {
     
     let navBarStyle = {width:this.state.menuOpen ? "325px" : "0"}
     return (
-      <div> {/* new div with navbar added navbar below added from app.js*/}
+      <div>
           <header className ="navbar">
             <div id = "navbar-text">Neighborhood Breweries
               <i
@@ -87,7 +87,7 @@ class Sidebar extends Component {
             </div>
           </header>
       
-      <div className="sidebar" tabIndex="-1" style = {navBarStyle}> {/*see below comment for what this replaced*/}
+      <div className="sidebar" tabIndex="-1" style = {navBarStyle}>
       
         <div className="sidebar-content" tabIndex="-1">
           <input
@@ -109,7 +109,7 @@ class Sidebar extends Component {
                 }}
               >
                 {location.venue.name}
-                <div id="venue-address">
+                <div className="venue-address">
                   <p>
                     {location.venue.location.formattedAddress[0]}
                   </p>
@@ -129,7 +129,7 @@ class Sidebar extends Component {
                 }}
               >
                 {location.venue.name}
-                <div id="venue-address">
+                <div className="venue-address">
                   <p>
                     {location.venue.location.formattedAddress[0]}
                   </p>

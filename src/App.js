@@ -23,7 +23,7 @@ class App extends Component {
     //this.foursquarePhotos() //coded out for later work
   }
   
-  //only afte component updated and foursquare locations obtained, based on state change, create the map
+  //only after component updated and foursquare locations obtained, based on state change, create the map
   componentDidUpdate(prevProps,prevState) {
     if (prevProps.fourSquareReady !==this.state.fourSquareReady){
       this.initMap()
@@ -32,6 +32,7 @@ class App extends Component {
   
   //call foursquare api using axios and get locations
   //when done, set state so map can load asynchronously
+  //approach inspired by https://www.youtube.com/watch?v=dAhMIF0fNpo&index=4&list=PLgOB68PvvmWCGNn8UMTpcfQEiITzxEEA1&t=0s
   foursquareLocations = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/explore?"
     const params = {
@@ -133,6 +134,9 @@ class App extends Component {
 
     });
   }
+
+//approach on creating map in component:
+//https://www.codementor.io/thomastuts/integrate-google-maps-api-react-refs-du10842zd
 
   render() {
     //console.log({...this.state})
