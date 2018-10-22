@@ -75,6 +75,10 @@ footer {
   top: 15px
 }
 
+.navbar i:hover {
+  color: #b2b2b2
+}
+
 /* Styles for sidebar, search box, and list items */
 
 .sidebar {
@@ -82,12 +86,13 @@ footer {
   z-index: 100;
   box-shadow: 0px, 1px, 1px, grey;
   background-color: #bebebe;
-  width: 325px;
-  max-width: 100%;
+  /*width: 325px; */
+  /*max-width: 100%; */
   /* display: block; */
   height: calc(100vh - 60px);
   overflow-y: scroll;
-  transition: 0.5s
+  transition: 0.5s;
+  overflow-x: hidden
 }
 
 .sidebar-content {
@@ -101,11 +106,11 @@ footer {
   height: 32px;
   font-size: 16px;
   padding-left: 5px;
-  margin-left: 5px;
+  margin-left: 7px;
 }
 
 .venue-list {
-  padding-left: 0px
+  padding-left: 0px;
 }
   
 .venue-name {

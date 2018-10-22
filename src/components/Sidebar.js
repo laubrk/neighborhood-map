@@ -19,7 +19,6 @@ class Sidebar extends Component {
     this.showMarkers(query)
   }
 
-  
   //Run search query form search box input. Filter and show locations based on query
   searchLocations = (query) => {
     let filteredSearch =
@@ -71,18 +70,20 @@ class Sidebar extends Component {
   
   render() {
     
-    let navBarStyle = {visibility:this.state.menuOpen ? "visible" : "hidden"}
+    let navBarStyle = {width:this.state.menuOpen ? "325px" : "0"}
     return (
       <div> {/* new div with navbar added navbar below added from app.js*/}
           <header className ="navbar">
             <div id = "navbar-text">Neighborhood Breweries
               <i
                 className = "fa fa-bars"
-                aria-label="menu"
-                role="menu"
-                onClick={this.menuToggle}
+                aria-label="hide venues"
+                role="button"
+                aria-pressed="false"
+                tabIndex="0"
+                onClick={this.menuToggle} onKeyPress={this.menuToggle}
               >
-            </i>
+              </i>
             </div>
           </header>
       
@@ -92,7 +93,7 @@ class Sidebar extends Component {
           <input
             type={"search"}
             id={"search"}
-            placeholder={"Search for Locations"}
+            placeholder={"Search by Name"}
             role={"search"}
             aria-label={"searchfield"}
             value={this.state.value}
