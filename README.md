@@ -12,6 +12,8 @@ The application functions as follows:
 * Clicking on a venue in the sidebar will open an info window on the map marker. Clicking any new venue in the sidebar will close any open info window.
 * The search bar will filter all venues and corresponding map markers dynamically, as typed, depending on the query string being searched. Search filtering is based on venue name.
 
+<img width="750px" alt="Neighborhood Map" src="/img/map-application.jpg">
+
 #### Other Functionality and Technologies
 
 The application map and locations are based on use of [Google Maps API](https://developers.google.com/maps/documentation/). Venue information is based on data from [Fourquare API](https://developer.foursquare.com/).
