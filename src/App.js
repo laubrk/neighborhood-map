@@ -17,17 +17,21 @@ class App extends Component {
     }
   }
   
+  //when component loads, run foursquare API to get locations
   componentDidMount() {
     this.foursquareLocations()
     //this.foursquarePhotos() //coded out for later work
   }
   
+  //only afte component updated and foursquare locations obtained, based on state change, create the map
   componentDidUpdate(prevProps,prevState) {
     if (prevProps.fourSquareReady !==this.state.fourSquareReady){
       this.initMap()
     }
   }
   
+  //call foursquare api using axios and get locations
+  //when done, set state so map can load asynchronously
   foursquareLocations = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/explore?"
     const params = {
@@ -40,6 +44,7 @@ class App extends Component {
       v: '20181011',
     }
     
+    //use axios to request foursquare data
     axios.get(endpoint + new URLSearchParams(params))
       .then(response => {
         this.setState({
@@ -54,8 +59,8 @@ class App extends Component {
     })
   }
 
-  //this is work in progress to add photos to infowindow
-  //not called so non-funtional and not part of project reqs
+  //this is work in progress to add photos to infowindow at a later date
+  //not called so non-funtional and not part of project requirement
   foursquarePhotos = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/4c422b9caf052d7f9b8e7e79/photos?"
     const params = {
@@ -75,13 +80,7 @@ class App extends Component {
       })
   }
   
-  /* moved to sidebar.js
-  menuToggle = () => {
-    this.setState({menuOpen: !this.state.menuOpen})
-    console.log("state: "+this.state.menuOpen);
-  }
-  */
-  
+  //initialize map
   initMap = () => {
     const map = new window.google.maps.Map(this.refs.map, {
       center: {lat: 32.713631, lng: -117.155602},
@@ -91,6 +90,7 @@ class App extends Component {
     //console log testing for asynch loading issues
     //console.log("Map Loading: "+this.state.fourSquareReady)
 
+    //create marker for each location returned on API call
     this.state.locationNames.map(location => {
       const marker = new window.google.maps.Marker({
         position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
@@ -106,6 +106,7 @@ class App extends Component {
 
       this.state.markers.push(marker)
 
+      //create infowindow for each marker
       marker.infoWindow = new window.google.maps.InfoWindow({
         content:
           `<div id="infoWindow">`+
