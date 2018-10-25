@@ -1,4 +1,4 @@
-### Udacity Front End Web Developer Neighborhood Map Project - Version 2
+### Udacity Front End Web Developer Neighborhood Map Project
 ---
 
 #### Overview
